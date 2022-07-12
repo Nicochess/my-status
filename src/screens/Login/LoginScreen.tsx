@@ -1,7 +1,7 @@
 import React from "react";
 import Button from "../../components/Button";
 import Input from "../../components/Input";
-import { Container } from "./styles";
+import { Container, LinkStyled } from "../../theme/stylesScreens";
 
 const LoginScreen: React.FC = () => {
   return (
@@ -12,7 +12,7 @@ const LoginScreen: React.FC = () => {
         <Input labelText="Password" />
       </section>
       <Button>Login</Button>
-      <a href=".">Create your account.</a>
+      <LinkStyled to="/register">Create your account.</LinkStyled>
     </Container>
   );
 };

@@ -1,15 +1,16 @@
-import React from "react";
+import React, { HTMLInputTypeAttribute } from "react";
 import { StyledInput } from "./styles";
 
 type Props = {
   labelText: string;
+  type?: HTMLInputTypeAttribute;
 };
 
-const Input: React.FC<Props> = ({ labelText }) => {
+const Input: React.FC<Props> = ({ labelText, type = "text" }) => {
   return (
-    <StyledInput>
+    <StyledInput type={type}>
       <label htmlFor={labelText}>{labelText}</label>
-      <input name={labelText} type="text"/>
+      <input name={labelText} type={type} />
     </StyledInput>
   );
 };

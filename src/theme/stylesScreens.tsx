@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export const Container = styled.div`
@@ -14,8 +15,9 @@ export const Container = styled.div`
     width: 100%;
     gap: 15px;
   }
-
-  a {
-    color: #000;
-  }
 `;
+
+export const LinkStyled = styled(Link)`
+  color: #000;
+`
+

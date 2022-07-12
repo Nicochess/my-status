@@ -1,13 +1,18 @@
 import React from "react";
-import LoginScreen from "./screens/LoginScreen/LoginScreen";
+import LoginScreen from "./screens/Login";
+import RegisterScreen from "./screens/Register";
 import { GlobalStyles } from "./theme/globalStyle";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 const App: React.FC = () => {
   return (
-    <div className="App">
+    <Router basename="/">
       <GlobalStyles />
-      <LoginScreen />
-    </div>
+      <Routes>
+        <Route path="/login" element={<LoginScreen />} />
+        <Route path="/register" element={<RegisterScreen />} />
+      </Routes>
+    </Router>
   );
 };
 

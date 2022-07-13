@@ -19,8 +19,9 @@ export const StyledFile = styled.div`
   }
 
   input[type="file"] {
-    height: 103px;
-    width: 103px;
+    height: 140px;
+    width: 140px;
+    opacity: 0;
     border-radius: 50%;
     border: none;
     cursor: pointer;
@@ -30,8 +31,8 @@ export const StyledFile = styled.div`
   img {
     position: absolute;
     top: 2px;
-    height: 103px;
-    width: 103px;
+    height: 140px;
+    width: 140px;
     background-size: cover;
     object-fit: cover;
     border-radius: 50%;

@@ -5,6 +5,7 @@ export const GlobalStyles = createGlobalStyle`
     *::after,
     *::before {
         font-family: 'Lato', sans-serif;
+        box-sizing: border-box;
     }
 
     body {

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Button from "../../components/Button";
 import Input from "../../components/Input";
+import InputFile from "../../components/InputFile";
 import { Container, LinkStyled } from "../../theme/stylesScreens";
 
 const RegisterScreen: React.FC = () => {
@@ -16,7 +17,7 @@ const RegisterScreen: React.FC = () => {
         </section>
       ) : (
         <section>
-          <Input labelText="Profile Picture" type="file" />
+          <InputFile labelText="Profile Picture" />
           <Input labelText="Email" />
         </section>
       )}

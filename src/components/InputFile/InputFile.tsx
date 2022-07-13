@@ -4,10 +4,11 @@ import Fallback from "../../assets/fallback.png";
 
 type Props = {
   labelText: string;
+  image?: string
 };
 
-const InputFile: React.FC<Props> = ({ labelText }) => {
-  const [img, setImg] = useState<string>(Fallback);
+const InputFile: React.FC<Props> = ({ labelText, image = Fallback }) => {
+  const [img, setImg] = useState<string>(image);
 
   const previewImage = (e: ChangeEvent) => {
     const inputImage = e.target as HTMLInputElement

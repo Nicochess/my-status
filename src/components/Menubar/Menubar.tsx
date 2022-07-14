@@ -15,7 +15,7 @@ const Menubar: React.FC = () => {
   return (
     <StyledMenu>
       {pathname === "/profile" ? (
-        <Link to="/">
+        <Link to="/home">
           <Button sx={color}>
             <Home />
           </Button>

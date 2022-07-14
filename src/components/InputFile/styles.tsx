@@ -11,6 +11,7 @@ export const StyledFile = styled.div`
   label {
     font-weight: 600;
     margin: 10px 0;
+    text-transform: capitalize;
     text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   }
 

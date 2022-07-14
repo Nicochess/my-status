@@ -1,43 +1,42 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Button from "../../components/Button";
 import Input from "../../components/Input";
 import InputFile from "../../components/InputFile";
 import { Container, LinkStyled } from "../../theme/stylesScreens";
-import { registerUser } from "../../firebase";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../store/context/AuthContext";
 
-type Form = {
-  email: string;
-  password: string;
-  confirm: string;
-  username: string;
+const initialState: Form = {
+  email: "",
+  password: "",
+  confirm: "",
+  username: "",
 };
 
 const RegisterScreen: React.FC = () => {
   const [firstStep, setFirstStep] = useState<boolean>(true);
   const [loading, setLoading] = useState<boolean>(false);
-  const [formData, setFormData] = useState<Form>({
-    email: "",
-    password: "",
-    confirm: "",
-    username: "",
-  });
+  const [formData, setFormData] = useState<Form>(initialState);
+  const navigate = useNavigate();
+  const { registerUser } = useContext(AuthContext);
+
 
   const handleChange = (e: React.ChangeEvent) => {
-    console.log(formData);
     const target = e.target as HTMLInputElement;
     setFormData((prev) => ({ ...prev, [target.name]: target.value }));
   };
 
   const handleRegister = async () => {
     setLoading(true);
-
     try {
-      await registerUser(formData.email, formData.password);
+      registerUser(formData);
+      navigate("/");
     } catch (error) {
       alert("Bruh");
     }
     setLoading(false);
   };
+
   return (
     <Container>
       <h1>My Status</h1>

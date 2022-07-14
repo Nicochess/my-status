@@ -15,11 +15,7 @@ const ProfileScreen: React.FC = () => {
     setOpen(true);
   };
 
-  const handleClose = (e: Event | React.SyntheticEvent, reason?: string) => {
-    if (reason === "clickaway") {
-      return;
-    }
-
+  const handleClose = () => {
     setOpen(false);
   };
 

@@ -19,7 +19,7 @@ const RegisterScreen: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [formData, setFormData] = useState<Form>(initialState);
   const navigate = useNavigate();
-  const { registerUser, currentUser } = useContext(AuthContext);
+  const { registerUser } = useContext(AuthContext);
 
   const handleChange = (e: React.ChangeEvent) => {
     const target = e.target as HTMLInputElement;

@@ -37,6 +37,7 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
       async (cred) => {
         await updateProfile(cred.user, {
           displayName: form.username,
+          photoURL: form.file
         });
 
         setDoc(doc(db, "users", cred.user.uid), {

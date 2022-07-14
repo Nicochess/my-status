@@ -1,6 +1,6 @@
 import { CopyAll } from "@mui/icons-material";
 import { Snackbar } from "@mui/material";
-import React, { useContext, useState } from "react";
+import React, {  useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import InputFile from "../../components/InputFile";
 import Menubar from "../../components/Menubar";
@@ -12,9 +12,11 @@ const ProfileScreen: React.FC = () => {
   const [open, setOpen] = useState<boolean>(false);
   const { currentUser, logout } = useContext(AuthContext);
 
-
   const copyCode = () => {
-    navigator.clipboard.writeText("923-1021das91-2nd0a=1");
+    const code = currentUser?.uid;
+    if (!code) return;
+
+    navigator.clipboard.writeText(code);
     setOpen(true);
   };
 
@@ -28,7 +30,6 @@ const ProfileScreen: React.FC = () => {
       <Container>
         <InputFile
           labelText={currentUser?.displayName || "Profile Picture"}
-          image="https://avatars.githubusercontent.com/u/51419598?v=4"
         />
         <SettingsButton
           text="Copy your code"

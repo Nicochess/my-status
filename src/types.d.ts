@@ -3,6 +3,7 @@ type Form = {
     password: string;
     confirm: string;
     username: string;
+    file: string
 };
 
 type UserData = {

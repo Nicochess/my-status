@@ -10,19 +10,19 @@ import AuthProvider from "./store/provider/AuthProvider";
 
 const App: React.FC = () => {
   return (
-    <AuthProvider>
-      <Router basename="/">
+    <Router basename="/">
+      <AuthProvider>
         <GlobalStyles />
         <Routes>
           <Route element={<PrivateRoute />}>
-            <Route path="/home" element={<HomeScreen />} />
+            <Route path="/" element={<HomeScreen />} />
             <Route path="/profile" element={<ProfileScreen />} />
           </Route>
           <Route path="/login" element={<LoginScreen />} />
           <Route path="/register" element={<RegisterScreen />} />
         </Routes>
-      </Router>
-    </AuthProvider>
+      </AuthProvider>
+    </Router>
   );
 };
 

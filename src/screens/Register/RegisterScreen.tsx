@@ -11,6 +11,7 @@ const initialState: Form = {
   password: "",
   confirm: "",
   username: "",
+  file: "",
 };
 
 const RegisterScreen: React.FC = () => {
@@ -18,8 +19,7 @@ const RegisterScreen: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [formData, setFormData] = useState<Form>(initialState);
   const navigate = useNavigate();
-  const { registerUser } = useContext(AuthContext);
-
+  const { registerUser, currentUser } = useContext(AuthContext);
 
   const handleChange = (e: React.ChangeEvent) => {
     const target = e.target as HTMLInputElement;
@@ -63,7 +63,10 @@ const RegisterScreen: React.FC = () => {
         </section>
       ) : (
         <section>
-          <InputFile labelText="Profile Picture" />
+          <InputFile
+            labelText="Profile Picture"
+            setFormData={setFormData}
+          />
           <Input
             labelText="Email"
             onChange={handleChange}

@@ -24,7 +24,7 @@ const LoginScreen: React.FC = () => {
   const handleClick = async () => {
     try {
       login(formData.email, formData.password).then(() => {
-        navigate("/home");
+        navigate("/");
       });
     } catch (error) {
       alert("BRUH");

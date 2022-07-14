@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import Button from "../Button";
+import { StyledButton } from "../Button/styles";
 
 export const StyledMenu = styled.nav`
   position: sticky;
@@ -16,6 +18,7 @@ export const Input = styled.input`
   padding: 10px;
   border-radius: 5px;
   border: 1px solid #939393;
+  outline: 0;
 `;
 
 export const InputContainer = styled.div`
@@ -26,3 +29,14 @@ export const InputContainer = styled.div`
   background-color: #fff;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 `;
+
+export const SubmitInput = styled(StyledButton)`
+  position: absolute;
+  width: auto;
+  height: 37px;
+  right: 11px;
+  top: 1px;
+  background-color: transparent;
+  box-shadow: none;
+  padding: 0 15px;
+`

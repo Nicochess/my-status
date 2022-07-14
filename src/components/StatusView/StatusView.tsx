@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { AuthContext } from "../../store/context/AuthContext";
 import { StyledView } from "./styles";
 
 type Props = {
@@ -7,9 +8,14 @@ type Props = {
 
 const StatusView: React.FC<Props> = ({ status }) => {
   const [online, setOnline] = useState<boolean>(status);
-  return (
-    <StyledView status={online} onClick={() => setOnline((prev) => !prev)} />
-  );
+  const { switchStatus } = useContext(AuthContext);
+  const handleClick = () => {
+    setOnline((prev) => {
+      switchStatus(!prev);
+      return !prev;
+    });
+  };
+  return <StyledView status={online} onClick={handleClick} />;
 };
 
 export default StatusView;

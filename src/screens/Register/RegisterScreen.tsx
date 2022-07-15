@@ -11,7 +11,7 @@ const initialState: Form = {
   password: "",
   confirm: "",
   username: "",
-  file: "",
+  file: {} as FileList,
 };
 
 const RegisterScreen: React.FC = () => {

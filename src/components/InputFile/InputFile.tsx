@@ -1,22 +1,17 @@
 import React, { ChangeEvent, useContext, useState } from "react";
 import { StyledFile } from "./styles";
 import Fallback from "../../assets/fallback.png";
+import { updateProfile, User } from "firebase/auth";
+import { AuthContext } from "../../store/context/AuthContext";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { storage } from "../../firebase";
-import { updateProfile } from "firebase/auth";
-import { AuthContext } from "../../store/context/AuthContext";
 
 type Props = {
   labelText: string;
-  image?: string;
   setFormData?: React.Dispatch<React.SetStateAction<Form>>;
 };
 
-const InputFile: React.FC<Props> = ({
-  labelText,
-  image = Fallback,
-  setFormData,
-}) => {
+const InputFile: React.FC<Props> = ({ labelText, setFormData }) => {
   const { currentUser } = useContext(AuthContext);
   const [imageStorage, setImageStorage] = useState<string>(
     currentUser?.photoURL || Fallback
@@ -27,19 +22,23 @@ const InputFile: React.FC<Props> = ({
     if (!inputImage.files?.length) return;
 
     try {
-      const imageRef = ref(storage, `profile/${currentUser?.uid}`);
+      if (setFormData) {
+        setFormData((prev) => ({ ...prev, file: inputImage.files }));
+      }
+
+      if (!currentUser) return;
+      const imageRef = ref(storage, `profile/${currentUser.uid}`);
+
       await uploadBytes(imageRef, inputImage.files[0]);
       const photoURL = await getDownloadURL(imageRef);
       setImageStorage(photoURL);
-      if (setFormData) {
-        setFormData((prev) => ({ ...prev, file: photoURL }));
-      }
-      if (!currentUser) return;
-      updateProfile(currentUser, { photoURL });
+      await updateProfile(currentUser, { photoURL });
     } catch (error) {
       console.log(error);
     }
   };
+
+  const updateImage = async (file: Blob, user: User) => {};
 
   return (
     <StyledFile>

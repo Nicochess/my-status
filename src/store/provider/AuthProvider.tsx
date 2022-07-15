@@ -7,9 +7,14 @@ import {
   User,
 } from "firebase/auth";
 import { onValue, ref, set } from "firebase/database";
+import {
+  getDownloadURL,
+  uploadBytes,
+  ref as refStorage,
+} from "firebase/storage";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { auth, db } from "../../firebase";
+import { auth, db, storage } from "../../firebase";
 import { AuthContext } from "../context/AuthContext";
 
 type Props = {
@@ -49,28 +54,51 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
   const registerUser = async (form: Form) => {
     createUserWithEmailAndPassword(auth, form.email, form.password).then(
       async (cred) => {
+        const imageRef = refStorage(storage, `profile/${cred.user.uid}`);
+        if (form.file) {
+          await uploadBytes(imageRef, form.file[0]);
+        }
+        const photoURL = await getDownloadURL(imageRef);
+
         await updateProfile(cred.user, {
           displayName: form.username,
-          photoURL: form.file,
+          photoURL: photoURL,
         });
 
         set(ref(db, "users/" + cred.user.uid), {
-          friends: [],
+          friends: [cred.user.uid],
           status: false,
         });
       }
     );
   };
 
-  const addFriend = (friendList: string[]) => {
-    set(ref(db, "users/" + currentUser?.uid), {
-      friends: [...friendList],
+  const addFriend = (newFriend: string) => {
+    if (!userData?.friends) return;
+    const newList = [newFriend, ...userData.friends];
+    const validate = checkUser(newFriend);
+    if (validate) {
+      set(ref(db, "users/" + currentUser?.uid), {
+        friends: newList,
+        status: userData.status,
+      });
+    }
+  };
+
+  const checkUser = (id: string) => {
+    const docRef = ref(db, "users/" + id);
+    let value;
+    onValue(docRef, (snapshot) => {
+      value = snapshot.val();
     });
+
+    return value;
   };
 
   const switchStatus = (status: boolean) => {
     set(ref(db, "users/" + currentUser?.uid), {
       status: status,
+      friends: userData?.friends,
     });
   };
 
@@ -87,9 +115,9 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
     login,
     logout,
     addFriend,
+    switchStatus,
     currentUser,
     userData,
-    switchStatus,
   };
 
   return (

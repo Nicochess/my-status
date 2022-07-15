@@ -1,4 +1,3 @@
-import { Co2Sharp } from "@mui/icons-material";
 import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
@@ -7,13 +6,7 @@ import {
   updateProfile,
   User,
 } from "firebase/auth";
-import {
-  doc,
-  DocumentData,
-  getDoc,
-  setDoc,
-  updateDoc,
-} from "firebase/firestore";
+import { onValue, ref, set } from "firebase/database";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth, db } from "../../firebase";
@@ -27,9 +20,7 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const navigate = useNavigate();
-  const [userData, setUserData] = useState<UserData | DocumentData | null>(
-    null
-  );
+  const [userData, setUserData] = useState<UserData | null>(null);
 
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, (user) => {
@@ -45,13 +36,11 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
   useEffect(() => {
     const getDocs = async () => {
       if (!currentUser) return;
-      const docRef = doc(db, "users", currentUser?.uid);
-      const docSnap = await getDoc(docRef);
-
-      if (docSnap.exists()) {
-        const data = docSnap.data();
+      const docRef = ref(db, "users/" + currentUser?.uid);
+      onValue(docRef, (snapshot) => {
+        const data = snapshot.val();
         setUserData(data);
-      }
+      });
     };
 
     getDocs();
@@ -65,7 +54,7 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
           photoURL: form.file,
         });
 
-        setDoc(doc(db, "users", cred.user.uid), {
+        set(ref(db, "users/" + cred.user.uid), {
           friends: [],
           status: false,
         });
@@ -74,16 +63,13 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
   };
 
   const addFriend = (friendList: string[]) => {
-    const docRef = doc(db, `users/${currentUser?.uid}`);
-    updateDoc(docRef, {
+    set(ref(db, "users/" + currentUser?.uid), {
       friends: [...friendList],
     });
   };
 
   const switchStatus = (status: boolean) => {
-    const docRef = doc(db, `users/${currentUser?.uid}`);
-    console.log(status);
-    updateDoc(docRef, {
+    set(ref(db, "users/" + currentUser?.uid), {
       status: status,
     });
   };

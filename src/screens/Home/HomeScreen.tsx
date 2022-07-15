@@ -5,18 +5,21 @@ import UserStatus from "../../components/UserStatus";
 import { AuthContext } from "../../store/context/AuthContext";
 
 const HomeScreen: React.FC = () => {
-  const { userData } = useContext(AuthContext);
+  const { userData, currentUser } = useContext(AuthContext);
 
   return (
     <div>
       <Menubar />
       {userData && <StatusView status={userData?.status} />}
 
-      <UserStatus
-        name="Laks"
-        status={true}
-        profile="https://avatars.githubusercontent.com/u/51419598?v=4"
-      />
+      {currentUser && (
+        <UserStatus
+          name={currentUser?.displayName || ""}
+          status={userData?.status}
+          profile={currentUser?.photoURL || ""}
+        />
+      )}
+
       <UserStatus
         name="Nicolas Magno"
         status={false}

@@ -14,13 +14,14 @@ export const StyledStatus = styled.div<Props>`
   p {
     text-align: left;
     width: 70%;
+    text-transform: capitalize;
     font-weight: 400;
     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
   }
 
   img {
-    width: 37px;
-    height: 37px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
     object-fit: cover;
     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));

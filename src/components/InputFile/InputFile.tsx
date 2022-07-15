@@ -25,20 +25,18 @@ const InputFile: React.FC<Props> = ({ labelText, setFormData }) => {
       if (setFormData) {
         setFormData((prev) => ({ ...prev, file: inputImage.files }));
       }
+      setImageStorage(URL.createObjectURL(inputImage.files[0]));
 
       if (!currentUser) return;
       const imageRef = ref(storage, `profile/${currentUser.uid}`);
 
       await uploadBytes(imageRef, inputImage.files[0]);
       const photoURL = await getDownloadURL(imageRef);
-      setImageStorage(photoURL);
       await updateProfile(currentUser, { photoURL });
     } catch (error) {
       console.log(error);
     }
   };
-
-  const updateImage = async (file: Blob, user: User) => {};
 
   return (
     <StyledFile>

@@ -19,17 +19,6 @@ const HomeScreen: React.FC = () => {
           profile={currentUser?.photoURL || ""}
         />
       )}
-
-      <UserStatus
-        name="Nicolas Magno"
-        status={false}
-        profile="https://avatars.githubusercontent.com/u/66505477?v=4"
-      />
-      <UserStatus
-        name="Nicolas Magno"
-        status={false}
-        profile="https://avatars.githubusercontent.com/u/66505477?v=4"
-      />
     </div>
   );
 };

@@ -24,7 +24,6 @@ const RegisterScreen: React.FC = () => {
   const handleChange = (e: React.ChangeEvent) => {
     const target = e.target as HTMLInputElement;
     setFormData((prev) => ({ ...prev, [target.name]: target.value }));
-    console.log(formData)
   };
 
   const handleRegister = async () => {

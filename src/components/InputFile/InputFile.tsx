@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useContext, useState } from "react";
 import { StyledFile } from "./styles";
 import Fallback from "../../assets/fallback.png";
-import { updateProfile, User } from "firebase/auth";
+import { updateProfile } from "firebase/auth";
 import { AuthContext } from "../../store/context/AuthContext";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { storage } from "../../firebase";

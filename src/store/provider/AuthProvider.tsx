@@ -6,7 +6,7 @@ import {
   updateProfile,
   User,
 } from "firebase/auth";
-import { onValue, ref, set } from "firebase/database";
+import { child, get, onValue, ref, set } from "firebase/database";
 import {
   getDownloadURL,
   uploadBytes,
@@ -39,7 +39,7 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    const getDocs = async () => {
+    const getUsers = async () => {
       if (!currentUser) return;
       const docRef = ref(db, "users/" + currentUser?.uid);
       onValue(docRef, (snapshot) => {
@@ -48,7 +48,7 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
       });
     };
 
-    getDocs();
+    getUsers();
   }, [currentUser]);
 
   const registerUser = async (form: Form) => {
@@ -66,6 +66,9 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
         });
 
         set(ref(db, "users/" + cred.user.uid), {
+          displayName: cred.user?.displayName,
+          photoURL: cred.user?.photoURL,
+          uid: cred.user?.uid,
           friends: [cred.user.uid],
           status: false,
         });
@@ -73,32 +76,21 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
     );
   };
 
-  const addFriend = (newFriend: string) => {
-    if (!userData?.friends) return;
-    const newList = [newFriend, ...userData.friends];
-    const validate = checkUser(newFriend);
-    if (validate) {
+  const addFriend = async (newFriend: string) => {
+    const dbRef = ref(db);
+    const snapshot = await get(child(dbRef, `users/${newFriend}`));
+    if (snapshot.exists() && userData) {
       set(ref(db, "users/" + currentUser?.uid), {
-        friends: newList,
-        status: userData.status,
+        ...userData,
+        friends: [newFriend, ...userData?.friends],
       });
     }
   };
 
-  const checkUser = (id: string) => {
-    const docRef = ref(db, "users/" + id);
-    let value;
-    onValue(docRef, (snapshot) => {
-      value = snapshot.val();
-    });
-
-    return value;
-  };
-
   const switchStatus = (status: boolean) => {
     set(ref(db, "users/" + currentUser?.uid), {
+      ...userData,
       status: status,
-      friends: userData?.friends,
     });
   };
 
@@ -119,6 +111,8 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
     currentUser,
     userData,
   };
+
+  if (loading) return <div>Loading...</div>;
 
   return (
     <AuthContext.Provider value={value}>

@@ -18,7 +18,7 @@ const Menubar: React.FC = () => {
   const handleClick = () => {
     setShowAdd((prev) => !prev);
     if (!inputRef.current) return;
-    addFriend(inputRef.current?.value)
+    addFriend(inputRef.current?.value);
   };
 
   return (

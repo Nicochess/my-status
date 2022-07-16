@@ -8,5 +8,8 @@ type Form = {
 
 type UserData = {
     friends: string[]
+    displayName: string
+    photoURL: string
+    uid: string
     status: boolean
 }

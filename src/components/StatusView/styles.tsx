@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 type Props = {
-  status: boolean;
+  status: boolean | undefined;
 };
 
 export const StyledView = styled.div<Props>`

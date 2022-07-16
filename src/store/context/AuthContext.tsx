@@ -1,5 +1,4 @@
 import { User } from "firebase/auth";
-import { DocumentData } from "firebase/firestore";
 import { createContext } from "react";
 
 type IAuthContext = {
@@ -8,8 +7,9 @@ type IAuthContext = {
   registerUser: (form: Form) => any;
   currentUser: User | null;
   addFriend: (newFriend: string) => void;
-  userData: UserData | DocumentData | null;
   switchStatus: (status: boolean) => void;
+  loading: boolean
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>
 };
 
 export const AuthContext = createContext<IAuthContext>({
@@ -17,7 +17,8 @@ export const AuthContext = createContext<IAuthContext>({
   logout: () => {},
   registerUser: (form) => {},
   currentUser: {} as User,
-  addFriend: (newFriend) => {},
-  userData: {} as UserData | DocumentData,
+  addFriend: (newFriend: string) => {},
   switchStatus: (status: boolean) => {},
+  loading: true,
+  setLoading: () => {}
 });

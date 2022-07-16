@@ -3,11 +3,11 @@ import { AuthContext } from "../../store/context/AuthContext";
 import { StyledView } from "./styles";
 
 type Props = {
-  status: boolean;
+  status: boolean | undefined;
 };
 
 const StatusView: React.FC<Props> = ({ status }) => {
-  const [online, setOnline] = useState<boolean>(status);
+  const [online, setOnline] = useState<boolean | undefined>(status);
   const { switchStatus } = useContext(AuthContext);
   const handleClick = () => {
     setOnline((prev) => {

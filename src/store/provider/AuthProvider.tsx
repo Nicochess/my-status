@@ -6,12 +6,8 @@ import {
   updateProfile,
   User,
 } from "firebase/auth";
-import { child, get, onValue, ref, set } from "firebase/database";
-import {
-  getDownloadURL,
-  uploadBytes,
-  ref as refStorage,
-} from "firebase/storage";
+import { arrayUnion, doc, setDoc, updateDoc } from "firebase/firestore";
+import { getDownloadURL, uploadBytes, ref } from "firebase/storage";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth, db, storage } from "../../firebase";
@@ -25,36 +21,22 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const navigate = useNavigate();
-  const [userData, setUserData] = useState<UserData | null>(null);
 
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user);
-      navigate("/");
       setLoading(false);
+      navigate("/");
     });
 
     return unsub;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
-    const getUsers = async () => {
-      if (!currentUser) return;
-      const docRef = ref(db, "users/" + currentUser?.uid);
-      onValue(docRef, (snapshot) => {
-        const data = snapshot.val();
-        setUserData(data);
-      });
-    };
-
-    getUsers();
-  }, [currentUser]);
-
   const registerUser = async (form: Form) => {
     createUserWithEmailAndPassword(auth, form.email, form.password).then(
       async (cred) => {
-        const imageRef = refStorage(storage, `profile/${cred.user.uid}`);
+        const imageRef = ref(storage, `profile/${cred.user.uid}`);
         if (form.file) {
           await uploadBytes(imageRef, form.file[0]);
         }
@@ -65,7 +47,7 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
           photoURL: photoURL,
         });
 
-        set(ref(db, "users/" + cred.user.uid), {
+        setDoc(doc(db, "users/" + cred.user.uid), {
           displayName: cred.user?.displayName,
           photoURL: cred.user?.photoURL,
           uid: cred.user?.uid,
@@ -77,19 +59,16 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
   };
 
   const addFriend = async (newFriend: string) => {
-    const dbRef = ref(db);
-    const snapshot = await get(child(dbRef, `users/${newFriend}`));
-    if (snapshot.exists() && userData) {
-      set(ref(db, "users/" + currentUser?.uid), {
-        ...userData,
-        friends: [newFriend, ...userData?.friends],
-      });
-    }
+    const userRef = doc(db, "users/" + currentUser?.uid);
+  
+    updateDoc(userRef, {
+      friends: arrayUnion({ [newFriend]: true }),
+    });
   };
 
   const switchStatus = (status: boolean) => {
-    set(ref(db, "users/" + currentUser?.uid), {
-      ...userData,
+    const userRef = doc(db, "users/" + currentUser?.uid);
+    updateDoc(userRef, {
       status: status,
     });
   };
@@ -108,8 +87,9 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
     logout,
     addFriend,
     switchStatus,
+    setLoading,
     currentUser,
-    userData,
+    loading,
   };
 
   if (loading) return <div>Loading...</div>;

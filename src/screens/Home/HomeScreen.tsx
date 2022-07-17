@@ -23,27 +23,23 @@ const HomeScreen: React.FC = () => {
     const getData = async () => {
       const userRef = doc(db, "users/" + currentUser?.uid);
       const user = await getDoc(userRef);
-      if (user.exists()) {
-        setStatus(user.data().status);
-      }
-    };
+      if (!user.exists()) return;
+      setStatus(user.data().status);
+      const dbRef = collection(db, "users");
+      const q = query(dbRef, where("uid", "in", user.data().friends));
+      const unsub = onSnapshot(q, (snapList) => {
+        let friends: DocumentData[] = [];
+        snapList.forEach((snap) => {
+          friends.push(snap.data());
+        });
 
-    getData();
-
-    const userRef = collection(db, "users");
-    if (!currentUser) return;
-    const q = query(userRef, where("friends", "array-contains", currentUser.uid));
-    const unsub = onSnapshot(q, (snapList) => {
-      let friends: DocumentData[] = [];
-      snapList.forEach((snap) => {
-        console.log(snap.data());
-        friends.push(snap.data());
+        setFriendsList(friends);
       });
 
-      setFriendsList(friends);
-    });
+      return unsub;
+    };
 
-    return unsub;
+    getData()
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

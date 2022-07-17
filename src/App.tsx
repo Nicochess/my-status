@@ -2,7 +2,7 @@ import React from "react";
 import LoginScreen from "./screens/Login";
 import RegisterScreen from "./screens/Register";
 import { GlobalStyles } from "./theme/globalStyle";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import HomeScreen from "./screens/Home/HomeScreen";
 import ProfileScreen from "./screens/Profile/ProfileScreen";
 import PrivateRoute from "./components/PrivateRoute";

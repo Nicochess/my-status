@@ -19,6 +19,7 @@ const HomeScreen: React.FC = () => {
   const [listFriends, setFriendsList] = useState<UserData[] | DocumentData>([]);
   const [status, setStatus] = useState<boolean>();
   const [loading, setLoading] = useState<boolean>(true);
+  const [change, setChange] = useState<boolean>(false)
 
   useEffect(() => {
     const getData = async () => {
@@ -44,11 +45,11 @@ const HomeScreen: React.FC = () => {
     getData();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [change]);
 
   return (
-    <div>
-      <Menubar />
+    <>
+      <Menubar setChange={setChange}/>
       {!loading && <StatusView status={status} />}
 
       {!loading &&
@@ -60,7 +61,7 @@ const HomeScreen: React.FC = () => {
             key={user && user.uid}
           />
         ))}
-    </div>
+    </>
   );
 };
 

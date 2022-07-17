@@ -9,13 +9,20 @@ const color = {
   color: "#939393",
 };
 
-const Menubar: React.FC = () => {
+type Props = {
+  setChange?: (value: React.SetStateAction<boolean>) => void;
+};
+
+const Menubar: React.FC<Props> = ({ setChange }) => {
   const [showAdd, setShowAdd] = useState<boolean>(false);
   const { pathname } = useLocation();
   const inputRef = useRef<HTMLInputElement | null>(null);
   const { addFriend } = useContext(AuthContext);
 
   const handleClick = () => {
+    if (setChange) {
+      setChange((prev) => !prev);
+    }
     setShowAdd((prev) => !prev);
     if (!inputRef.current) return;
     addFriend(inputRef.current?.value);

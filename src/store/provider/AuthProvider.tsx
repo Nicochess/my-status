@@ -59,11 +59,13 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
   };
 
   const addFriend = async (newFriend: string) => {
+    setLoading(true);
     const userRef = doc(db, "users/" + currentUser?.uid);
-  
+
     updateDoc(userRef, {
       friends: arrayUnion(newFriend),
     });
+    setLoading(false);
   };
 
   const switchStatus = (status: boolean) => {

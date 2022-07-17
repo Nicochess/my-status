@@ -62,7 +62,7 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
     const userRef = doc(db, "users/" + currentUser?.uid);
   
     updateDoc(userRef, {
-      friends: arrayUnion({ [newFriend]: true }),
+      friends: arrayUnion(newFriend),
     });
   };
 

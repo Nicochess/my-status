@@ -18,6 +18,7 @@ const HomeScreen: React.FC = () => {
   const { currentUser } = useContext(AuthContext);
   const [listFriends, setFriendsList] = useState<UserData[] | DocumentData>([]);
   const [status, setStatus] = useState<boolean>();
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const getData = async () => {
@@ -36,10 +37,11 @@ const HomeScreen: React.FC = () => {
         setFriendsList(friends);
       });
 
+      setLoading(false);
       return unsub;
     };
 
-    getData()
+    getData();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -47,8 +49,9 @@ const HomeScreen: React.FC = () => {
   return (
     <div>
       <Menubar />
-      <StatusView status={status} />
-      {listFriends &&
+      {!loading && <StatusView status={status} />}
+
+      {!loading &&
         listFriends?.map((user: UserData) => (
           <UserStatus
             name={user && user.displayName}

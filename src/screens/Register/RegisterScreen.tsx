@@ -18,12 +18,24 @@ const RegisterScreen: React.FC = () => {
   const [firstStep, setFirstStep] = useState<boolean>(true);
   const [loading, setLoading] = useState<boolean>(false);
   const [formData, setFormData] = useState<Form>(initialState);
+  const [disable, setDisable] = useState<boolean>(true);
   const navigate = useNavigate();
   const { registerUser } = useContext(AuthContext);
 
   const handleChange = (e: React.ChangeEvent) => {
     const target = e.target as HTMLInputElement;
-    setFormData((prev) => ({ ...prev, [target.name]: target.value }));
+    setDisable(true);
+    setFormData((prev) => {
+      const newForm = { ...prev, [target.name]: target.value };
+      if (newForm.username && newForm.password && newForm.confirm) {
+        setDisable(false);
+      }
+      return newForm;
+    });
+  };
+
+  const nextStep = () => {
+    setFirstStep((prev) => !prev);
   };
 
   const handleRegister = async () => {
@@ -63,10 +75,7 @@ const RegisterScreen: React.FC = () => {
         </section>
       ) : (
         <section>
-          <InputFile
-            labelText="Profile Picture"
-            setFormData={setFormData}
-          />
+          <InputFile labelText="Profile Picture" setFormData={setFormData} />
           <Input
             labelText="Email"
             onChange={handleChange}
@@ -77,9 +86,14 @@ const RegisterScreen: React.FC = () => {
       )}
 
       {firstStep ? (
-        <Button onClick={() => setFirstStep((prev) => !prev)}>Next Step</Button>
+        <Button disabled={disable} onClick={nextStep}>
+          Next Step
+        </Button>
       ) : (
-        <Button onClick={handleRegister} disabled={loading}>
+        <Button
+          onClick={handleRegister}
+          disabled={!formData.email.length || loading}
+        >
           Register
         </Button>
       )}

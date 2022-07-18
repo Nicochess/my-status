@@ -1,6 +1,10 @@
 import styled from "styled-components";
 
-export const StyledButton = styled.button`
+type Props = {
+  disabled?: boolean
+}
+
+export const StyledButton = styled.button<Props>`
   padding: 10px;
   height: 50px;
   width: 100%;
@@ -11,5 +15,5 @@ export const StyledButton = styled.button`
   font-size: 16px;
   border: none;
   background-color: #f1f1f1;
-  cursor: pointer;
+  cursor: ${props => props.disabled ? "default" : "pointer"};
 `;

@@ -29,7 +29,6 @@ const ForgotPasswordScreen: React.FC = () => {
       <h1>My Status</h1>
       <section>
         <Input labelText="Email" onChange={handleChange} name="email" />
-        <LinkStyled to="/login">Don't have an account yet?</LinkStyled>
       </section>
       <Button onClick={handleClick}>Send Email</Button>
       <LinkStyled to="/register">Create your account.</LinkStyled>

@@ -52,8 +52,6 @@ const HomeScreen: React.FC = () => {
       <Menubar setChange={setChange}/>
       {!loading && <StatusView status={status} />}
 
-      <UserStatus name="Nicolas" profile="" status={true} />
-
       {!loading &&
         listFriends?.map((user: UserData) => (
           <UserStatus

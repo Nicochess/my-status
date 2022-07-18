@@ -5,27 +5,15 @@ import Input from "../../components/Input";
 import { AuthContext } from "../../store/context/AuthContext";
 import { Container, LinkStyled } from "../../theme/stylesScreens";
 
-type Form = {
-  email: string;
-  password: string;
-};
-
-const initialState: Form = {
-  email: "",
-  password: "",
-};
-
-const LoginScreen: React.FC = () => {
-  const [formData, setFormData] = useState<Form>(initialState);
-  const navigate = useNavigate();
-  const { login } = useContext(AuthContext);
-
+const ForgotPasswordScreen: React.FC = () => {
+  const [email, setEmail] = useState<string>("");
+  const navigate = useNavigate()
+  const { forgotPassword } = useContext(AuthContext);
 
   const handleClick = async () => {
     try {
-      login(formData.email, formData.password).then(() => {
-        navigate("/");
-      });
+      forgotPassword(email);
+      navigate("/login")
     } catch (error) {
       alert("BRUH");
     }
@@ -33,7 +21,7 @@ const LoginScreen: React.FC = () => {
 
   const handleChange = (e: React.ChangeEvent) => {
     const target = e.target as HTMLInputElement;
-    setFormData((prev) => ({ ...prev, [target.name]: target.value }));
+    setEmail(target.value);
   };
 
   return (
@@ -41,13 +29,12 @@ const LoginScreen: React.FC = () => {
       <h1>My Status</h1>
       <section>
         <Input labelText="Email" onChange={handleChange} name="email" />
-        <Input labelText="Password" onChange={handleChange} name="password" />
-        <LinkStyled to="/forgot">Forgot your password?</LinkStyled>
+        <LinkStyled to="/login">Don't have an account yet?</LinkStyled>
       </section>
-      <Button onClick={handleClick}>Login</Button>
+      <Button onClick={handleClick}>Send Email</Button>
       <LinkStyled to="/register">Create your account.</LinkStyled>
     </Container>
   );
 };
 
-export default LoginScreen;
+export default ForgotPasswordScreen;

@@ -7,6 +7,7 @@ import HomeScreen from "./screens/Home/HomeScreen";
 import ProfileScreen from "./screens/Profile/ProfileScreen";
 import PrivateRoute from "./components/PrivateRoute";
 import AuthProvider from "./store/provider/AuthProvider";
+import ForgotPasswordScreen from "./screens/ForgotPassword/ForgotPasswordScreen";
 
 const App: React.FC = () => {
   return (
@@ -20,6 +21,7 @@ const App: React.FC = () => {
           </Route>
           <Route path="/login" element={<LoginScreen />} />
           <Route path="/register" element={<RegisterScreen />} />
+          <Route path="/forgot" element={<ForgotPasswordScreen />} />
         </Routes>
       </AuthProvider>
     </Router>

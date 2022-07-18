@@ -19,5 +19,6 @@ export const Container = styled.div`
 
 export const LinkStyled = styled(Link)`
   color: #000;
+  text-align: center;
 `
 

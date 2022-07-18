@@ -1,6 +1,7 @@
 import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
+  sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signOut,
   updateProfile,
@@ -83,6 +84,10 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
     return signInWithEmailAndPassword(auth, email, password);
   };
 
+  const forgotPassword = (email: string) => {
+    return sendPasswordResetEmail(auth, email)
+  }
+
   const value = {
     registerUser,
     login,
@@ -90,6 +95,7 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
     addFriend,
     switchStatus,
     setLoading,
+    forgotPassword,
     currentUser,
     loading,
   };

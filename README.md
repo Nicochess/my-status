@@ -1,3 +1,4 @@
+<p align="center"><img src="./public/logo192.png"></p>
 <h1 align="center">My Status</h1>
 
 <h2>About the project</h2>

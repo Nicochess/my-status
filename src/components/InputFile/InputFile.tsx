@@ -17,9 +17,17 @@ const InputFile: React.FC<Props> = ({ labelText, setFormData }) => {
     currentUser?.photoURL || Fallback
   );
 
+  const [error, setError] = useState<boolean>(false);
+
   const previewImage = async (e: ChangeEvent) => {
     const inputImage = e.target as HTMLInputElement;
     if (!inputImage.files?.length) return;
+    const fileSize = inputImage.files[0].size / 1024 / 1024;
+    if (fileSize > 2) {
+      setError(true);
+      return;
+    }
+    setError(false);
 
     try {
       if (setFormData) {
@@ -45,10 +53,12 @@ const InputFile: React.FC<Props> = ({ labelText, setFormData }) => {
         name={labelText}
         id={labelText}
         type="file"
+        accept="image/*"
         onChange={previewImage}
       />
 
       <img src={imageStorage} alt={labelText} />
+      {error && <p>Your file is bigger than 2MBs.</p>}
     </StyledFile>
   );
 };

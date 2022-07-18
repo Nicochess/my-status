@@ -1,5 +1,6 @@
 import React from "react";
 import { StyledStatus } from "./styles";
+import Fallback from "../../assets/icon.png";
 
 type Props = {
   name: string;
@@ -10,7 +11,7 @@ type Props = {
 const UserStatus: React.FC<Props> = ({ name, status, profile }) => {
   return (
     <StyledStatus status={status}>
-      <img src={profile} alt={name} />
+      <img src={profile || Fallback} alt={name} />
       <p>{name}</p>
       <span></span>
     </StyledStatus>

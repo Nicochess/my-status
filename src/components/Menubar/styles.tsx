@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import Button from "../Button";
 import { StyledButton } from "../Button/styles";
 
 export const StyledMenu = styled.nav`

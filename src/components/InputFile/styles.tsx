@@ -31,7 +31,7 @@ export const StyledFile = styled.div`
 
   img {
     position: absolute;
-    top: 2px;
+    top: 0;
     height: 140px;
     width: 140px;
     background-size: cover;
@@ -39,5 +39,11 @@ export const StyledFile = styled.div`
     border-radius: 50%;
     cursor: pointer;
     z-index: 0;
+  }
+
+  p {
+    position: absolute;
+    bottom: 100%;
+    color: #D12A2A;
   }
 `;

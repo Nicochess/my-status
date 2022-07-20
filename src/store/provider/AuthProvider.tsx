@@ -1,3 +1,4 @@
+import { LinearProgress } from "@mui/material";
 import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
@@ -85,8 +86,8 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
   };
 
   const forgotPassword = (email: string) => {
-    return sendPasswordResetEmail(auth, email)
-  }
+    return sendPasswordResetEmail(auth, email);
+  };
 
   const value = {
     registerUser,
@@ -100,7 +101,7 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
     loading,
   };
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <LinearProgress color="inherit" sx={{ color: "#999" }} />;
 
   return (
     <AuthContext.Provider value={value}>

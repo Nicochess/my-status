@@ -19,7 +19,7 @@ const HomeScreen: React.FC = () => {
   const [listFriends, setFriendsList] = useState<UserData[] | DocumentData>([]);
   const [status, setStatus] = useState<boolean>();
   const [loading, setLoading] = useState<boolean>(true);
-  const [change, setChange] = useState<boolean>(false)
+  const [change, setChange] = useState<boolean>(false);
 
   useEffect(() => {
     const getData = async () => {
@@ -49,18 +49,19 @@ const HomeScreen: React.FC = () => {
 
   return (
     <>
-      <Menubar setChange={setChange}/>
+      <Menubar setChange={setChange} />
       {!loading && <StatusView status={status} />}
 
       {!loading &&
         listFriends?.map((user: UserData) => (
           <UserStatus
-            name={user && user.displayName}
-            status={user && user.status}
-            profile={user && user.photoURL}
-            key={user && user.uid}
+            name={user.displayName}
+            status={user.status}
+            profile={user.photoURL}
+            key={user.uid}
           />
         ))}
+        
     </>
   );
 };

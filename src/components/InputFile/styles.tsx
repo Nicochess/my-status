@@ -9,7 +9,7 @@ export const StyledFile = styled.div`
   position: relative;
 
   label {
-    font-weight: 600;
+    font-weight: 500;
     margin: 10px 0;
     text-transform: capitalize;
     text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);

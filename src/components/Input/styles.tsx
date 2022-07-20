@@ -8,7 +8,7 @@ export const StyledInput = styled.div<{ type?: string }>`
   position: relative;
 
   label {
-    font-weight: 600;
+    font-weight: 500;
     margin: 0 0 10px;
     text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   }
@@ -16,7 +16,7 @@ export const StyledInput = styled.div<{ type?: string }>`
   input {
     height: 50px;
     border-radius: 5px;
-    border: 2px solid #000;
+    border: 1px solid #000;
   }
 
   input[type="file"]::-webkit-file-upload-button {

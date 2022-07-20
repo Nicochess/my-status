@@ -1,12 +1,13 @@
-import { CopyAll } from "@mui/icons-material";
+import { Logout, QrCode } from "@mui/icons-material";
 import { Snackbar } from "@mui/material";
-import React, {  useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useState } from "react";
 import InputFile from "../../components/InputFile";
 import Menubar from "../../components/Menubar";
 import SettingsButton from "../../components/SettingsButton/SettingsButton";
 import { AuthContext } from "../../store/context/AuthContext";
 import { Container } from "./styles";
+
+const style = { color: "#939393" };
 
 const ProfileScreen: React.FC = () => {
   const [open, setOpen] = useState<boolean>(false);
@@ -28,17 +29,17 @@ const ProfileScreen: React.FC = () => {
     <>
       <Menubar />
       <Container>
-        <InputFile
-          labelText={currentUser?.displayName || "Profile Picture"}
-        />
+        <InputFile labelText={currentUser?.displayName || "Profile Picture"} />
         <SettingsButton
           text="Copy your code"
-          Icon={<CopyAll sx={{ color: "#939393" }} />}
+          Icon={<QrCode sx={style} />}
           onClick={copyCode}
         />
-        <Link to="/login" onClick={logout}>
-          Logout
-        </Link>
+        <SettingsButton
+          text="Logout"
+          onClick={logout}
+          Icon={<Logout sx={style} />}
+        />
       </Container>
       <Snackbar
         open={open}

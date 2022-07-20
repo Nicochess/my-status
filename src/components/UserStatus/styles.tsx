@@ -9,7 +9,7 @@ export const StyledStatus = styled.div<Props>`
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
-  border-bottom: 1px solid #D9D9D9;
+  border-bottom: 1px solid ${props => props.theme.colors.gray};
 
   p {
     text-align: left;
@@ -31,7 +31,8 @@ export const StyledStatus = styled.div<Props>`
     border-radius: 50%;
     width: 15px;
     height: 15px;
-    background-color: ${(props) => (props.status ? "#00FF38" : "#D12A2A")};
+    background-color: ${(props) =>
+      props.status ? props.theme.colors.available : props.theme.colors.busy};
     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
   }
 `;

@@ -44,6 +44,6 @@ export const StyledFile = styled.div`
   p {
     position: absolute;
     bottom: 100%;
-    color: #D12A2A;
+    color: ${props => props.theme.colors.busy};
   }
 `;

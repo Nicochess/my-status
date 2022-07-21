@@ -57,7 +57,7 @@ const InputFile: React.FC<Props> = ({ labelText, setFormData }) => {
         onChange={previewImage}
       />
 
-      <img src={imageStorage} alt={labelText} />
+      <img src={imageStorage} alt={labelText} onError={() => setImageStorage(Fallback)}/>
       {error && <p>Your file is bigger than 2MBs.</p>}
     </StyledFile>
   );

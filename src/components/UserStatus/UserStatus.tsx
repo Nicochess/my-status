@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { StyledStatus } from "./styles";
 import Fallback from "../../assets/icon.png";
 
@@ -9,9 +9,12 @@ type Props = {
 };
 
 const UserStatus: React.FC<Props> = ({ name, status, profile }) => {
+  const [image, setImage] = useState<string>(profile)
+  const fallbackImage = () => setImage(Fallback)
+
   return (
     <StyledStatus status={status}>
-      <img src={profile || Fallback} alt={name} />
+      <img src={image} alt={name} onError={fallbackImage} />
       <p>{name}</p>
       <span></span>
     </StyledStatus>

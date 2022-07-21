@@ -13,9 +13,7 @@ type Props = {
 
 const InputFile: React.FC<Props> = ({ labelText, setFormData }) => {
   const { currentUser } = useContext(AuthContext);
-  const [imageStorage, setImageStorage] = useState<string>(
-    currentUser?.photoURL || Fallback
-  );
+  const [imageStorage, setImageStorage] = useState<string>(Fallback);
 
   const [error, setError] = useState<boolean>(false);
 
@@ -57,7 +55,12 @@ const InputFile: React.FC<Props> = ({ labelText, setFormData }) => {
         onChange={previewImage}
       />
 
-      <img src={imageStorage} alt={labelText} onError={() => setImageStorage(Fallback)}/>
+      <img
+        src={imageStorage}
+        alt={labelText}
+        onError={() => setImageStorage(Fallback)}
+        onLoad={() => setImageStorage(currentUser?.photoURL || Fallback)}
+      />
       {error && <p>Your file is bigger than 2MBs.</p>}
     </StyledFile>
   );

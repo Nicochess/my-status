@@ -1,7 +1,12 @@
 import React, { useContext, useState } from "react";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { RootState } from "../../app/store";
 import Button from "../../components/Button";
 import Input from "../../components/Input";
+import { selectCurrentUser } from "../../features/authSlice/authSlice";
+import { switchStatus } from "../../features/userStatus/userStatusSlice";
 import { AuthContext } from "../../store/context/AuthContext";
 import { Container, LinkStyled } from "../../theme/stylesScreens";
 
@@ -19,7 +24,7 @@ const LoginScreen: React.FC = () => {
   const [formData, setFormData] = useState<Form>(initialState);
   const navigate = useNavigate();
   const { login } = useContext(AuthContext);
-
+  const dispatch = useDispatch()
 
   const handleClick = async () => {
     try {
@@ -33,6 +38,7 @@ const LoginScreen: React.FC = () => {
 
   const handleChange = (e: React.ChangeEvent) => {
     const target = e.target as HTMLInputElement;
+    dispatch(switchStatus())
     setFormData((prev) => ({ ...prev, [target.name]: target.value }));
   };
 

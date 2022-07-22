@@ -7,6 +7,7 @@ type IAuthContext = {
   registerUser: (form: Form) => any;
   currentUser: User | null;
   addFriend: (newFriend: string) => void;
+  deleteFriend: (friendId: string) => void;
   switchStatus: (status: boolean) => void;
   loading: boolean;
   setLoading: React.Dispatch<React.SetStateAction<boolean>>;
@@ -19,6 +20,7 @@ export const AuthContext = createContext<IAuthContext>({
   registerUser: (form) => {},
   currentUser: {} as User,
   addFriend: (newFriend: string) => {},
+  deleteFriend: (friendId: string) => {},
   switchStatus: (status: boolean) => {},
   loading: true,
   setLoading: () => {},

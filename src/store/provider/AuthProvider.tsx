@@ -8,7 +8,13 @@ import {
   updateProfile,
   User,
 } from "firebase/auth";
-import { arrayUnion, doc, setDoc, updateDoc } from "firebase/firestore";
+import {
+  arrayRemove,
+  arrayUnion,
+  doc,
+  setDoc,
+  updateDoc,
+} from "firebase/firestore";
 import { getDownloadURL, uploadBytes, ref } from "firebase/storage";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -70,6 +76,16 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
     setLoading(false);
   };
 
+  const deleteFriend = async (friendId: string) => {
+    setLoading(true);
+    const userRef = doc(db, "users/" + currentUser?.uid);
+
+    updateDoc(userRef, {
+      friends: arrayRemove(friendId),
+    });
+    setLoading(false);
+  };
+
   const switchStatus = (status: boolean) => {
     const userRef = doc(db, "users/" + currentUser?.uid);
     updateDoc(userRef, {
@@ -97,6 +113,7 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
     switchStatus,
     setLoading,
     forgotPassword,
+    deleteFriend,
     currentUser,
     loading,
   };

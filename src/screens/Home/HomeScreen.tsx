@@ -58,6 +58,8 @@ const HomeScreen: React.FC = () => {
             name={user.displayName}
             status={user.status}
             profile={user.photoURL}
+            setChange={setChange}
+            id={user.uid}
             key={user.uid}
           />
         ))}
